@@ -1,32 +1,223 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanjay gauswami - Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Sanjay Gauswami | Root Access</title>
+    <style>
+        /* Base Hacker Theme Variables */
+        :root {
+            --bg-color: #050505;
+            --main-color: #00FF41; /* Matrix Green */
+            --glow: 0 0 10px #00FF41, 0 0 20px #00FF41;
+            --font-stack: 'Courier New', Courier, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--main-color);
+            font-family: var(--font-stack);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* CRT Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Terminal Window */
+        .terminal-window {
+            background-color: rgba(0, 10, 0, 0.8);
+            border: 2px solid var(--main-color);
+            box-shadow: var(--glow);
+            width: 100%;
+            max-width: 850px;
+            border-radius: 5px;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* Terminal Header */
+        .terminal-header {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            padding: 5px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-body {
+            padding: 30px;
+        }
+
+        /* Glitch Effect for Name */
+        .glitch {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: var(--glow);
+            margin-bottom: 20px;
+        }
+
+        /* Content Styles */
+        h2 {
+            margin-top: 30px;
+            border-bottom: 1px dashed var(--main-color);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        p, li {
+            margin-top: 10px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            padding: 2px 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            background-color: var(--bg-color);
+            color: var(--main-color);
+            border: 1px solid var(--main-color);
+            box-shadow: var(--glow);
+        }
+
+        /* Blinking Cursor */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--main-color);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* System Stats Grid */
+        .sys-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            background: rgba(0, 255, 65, 0.05);
+            padding: 15px;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+        }
+    </style>
 </head>
 <body>
-    <header><nav>
-        <div class="logo">Sanjay</div>
-        <ul><li><a href="#about">my name is sanjay and i am IT student</a></li><li><a href="#projects">Projects</a></li></ul>
-    </nav></header>
 
-    <section id="hero">
-        <h1>Hi, I'm Sanjay</h1>
-        <p>Web Developer</p>
-    </section>
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span>root@SANJAY-mainframe:~</span>
+            <span>[ SYSTEM ONLINE ]</span>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="glitch">SANJAY GAUSWAMI</div>
+            
+            <div id="typed-text"></div><span class="cursor"></span>
 
-    <section id="projects">
-        <h2>Projects</h2>
-        <div class="project-card"><h3>Project 1</h3><p>Description</p></div>
-    </section>
+            <div id="hidden-content" style="display: none;">
+                <h2>> SYSTEM_INFO</h2>
+                <div class="sys-stats">
+                    <div>
+                        <strong>[NAME]:</strong> Sanjay Gauswami<br>
+                        <strong>[USERNAME]:</strong> SANJAY<br>
+                        <strong>[DEGREE]:</strong> BCA
+                    </div>
+                    <div>
+                        <strong>[SKILLS]:</strong> Web Developer, Editor, Digital Marketing<br>
+                        <strong>[LANGUAGES]:</strong> Java, Python, C, C++, HTML, SQL
+                    </div>
+                </div>
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:email@example.com">gauswami916@gmail.com</a></p>
-    </section>
+                <h2>> EXECUTING_PROJECTS</h2>
+                <ul>
+                    <li><strong>Web_Dev.exe:</strong> Building and deploying responsive front-end applications.</li>
+                    <li><strong>Marketing_Protocol.sys:</strong> Executing digital marketing strategies and outreach.</li>
+                    <li><strong>Video_Editor.bat:</strong> Compiling and rendering high-quality media content.</li>
+                </ul>
 
-    <footer><p>&copy; 2026</p></footer>
+                <h2>> ESTABLISH_CONNECTION</h2>
+                <p>PING: <a href="mailto:your.email@example.com">Send_Encrypted_Message</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Typing Effect Logic
+        const textToType = "> Initializing boot sequence...\n> Accessing mainframe...\n> Loading user profile...\n> Welcome to the network, SANJAY.";
+        const typedTextElement = document.getElementById('typed-text');
+        const hiddenContent = document.getElementById('hidden-content');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < textToType.length) {
+                if(textToType.charAt(index) === '\n') {
+                    typedTextElement.innerHTML += '<br>';
+                } else {
+                    typedTextElement.innerHTML += textToType.charAt(index);
+                }
+                index++;
+                // Randomize typing speed slightly for realism
+                setTimeout(typeWriter, Math.floor(Math.random() * 50) + 30);
+            } else {
+                // Once typing is done, show the rest of the site
+                setTimeout(() => {
+                    hiddenContent.style.display = 'block';
+                }, 500);
+            }
+        }
+
+        // Start typing effect on load
+        window.onload = () => {
+            setTimeout(typeWriter, 500);
+        };
+    </script>
 </body>
 </html>
