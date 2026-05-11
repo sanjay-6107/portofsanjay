@@ -1,20 +1,20 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanjay Gauswami | Professional Portfolio</title>
+    <title>SANJAY | Professional Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Professional Theme Variables */
+        /* Modern Theme Variables */
         :root {
-            --bg-primary: #0f172a;      /* Dark slate */
-            --bg-secondary: #1e293b;    /* Lighter slate for cards */
-            --text-primary: #f8fafc;    /* White/gray */
-            --text-secondary: #94a3b8;  /* Muted gray */
-            --accent-color: #0ea5e9;    /* Professional vibrant blue */
-            --accent-hover: #0284c7;
-            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --bg-dark: #0a0a0a;
+            --primary-color: #00f2fe; /* Electric Blue */
+            --secondary-color: #4facfe;
+            --text-main: #ffffff;
+            --text-muted: #a0aab2;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
         }
 
         * {
@@ -22,339 +22,405 @@
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: var(--font-main);
-            line-height: 1.6;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
-        /* Navigation */
-        nav {
+        /* --- Live Canvas Background --- */
+        #particle-canvas {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            background-color: rgba(15, 23, 42, 0.95);
-            padding: 20px 50px;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* --- Navigation (Glassmorphism) --- */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            border-bottom: 1px solid #334155;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.5);
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .logo span {
-            color: var(--accent-color);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Sections */
+        /* --- Section Styling --- */
         section {
-            padding: 100px 50px;
-            max-width: 1200px;
-            margin: 0 auto;
+            min-height: 100vh;
+            padding: 120px 5% 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
         }
 
         .section-title {
             font-size: 2.5rem;
-            margin-bottom: 40px;
-            color: var(--text-primary);
+            margin-bottom: 50px;
             text-align: center;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background-color: var(--accent-color);
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        /* Hero Section */
-        #home {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .hero-subtitle {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .hero-title {
-            font-size: 4rem;
             font-weight: 700;
+        }
+
+        .section-title span {
+            color: var(--primary-color);
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
             margin-bottom: 20px;
-            line-height: 1.1;
         }
 
-        .hero-desc {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            max-width: 600px;
+        /* Dynamic Typing Text */
+        .typing-text {
+            font-size: 1.5rem;
+            color: var(--text-muted);
             margin-bottom: 30px;
+            min-height: 30px;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--accent-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+        .typing-text span {
+            color: var(--primary-color);
             font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2rem;
+            background-color: var(--primary-color);
+            animation: blink 0.8s infinite;
         }
 
-        /* About & Skills Grid */
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- Glassmorphism Cards --- */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+
+        /* --- About Grid --- */
         .about-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .info-card {
-            background-color: var(--bg-secondary);
-            padding: 30px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-card h3 {
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .info-list {
-            list-style: none;
-        }
-
-        .info-list li {
-            margin-bottom: 12px;
-            font-size: 1.1rem;
+        .info-item {
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            font-size: 1.1rem;
         }
 
-        .info-list i {
-            color: var(--accent-color);
-            width: 20px;
+        .info-item i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            width: 30px;
         }
 
-        /* Skills Tags */
-        .skills-container {
+        /* --- Skills Tags --- */
+        .skills-wrapper {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
         }
 
         .skill-tag {
-            background-color: rgba(14, 165, 233, 0.1);
-            color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            border: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 10px 20px;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 30px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
         }
 
-        /* Contact Section */
-        .contact-container {
+        .skill-tag:hover {
+            background: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* --- Contact Section --- */
+        .contact-grid {
             display: flex;
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
         }
 
-        .contact-item {
-            background-color: var(--bg-secondary);
-            padding: 30px;
-            border-radius: 10px;
+        .contact-card {
             text-align: center;
             min-width: 250px;
-            border: 1px solid #334155;
-            transition: transform 0.3s ease;
         }
 
-        .contact-item:hover {
-            transform: translateY(-5px);
+        .contact-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
         }
 
-        .contact-icon {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-
-        .contact-item h4 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .contact-item a, .contact-item p {
-            color: var(--text-secondary);
+        .contact-card a {
+            display: block;
+            color: var(--text-main);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            transition: color 0.3s;
         }
 
-        .contact-item a:hover {
-            color: var(--accent-color);
+        .contact-card a:hover {
+            color: var(--primary-color);
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px;
-            background-color: var(--bg-secondary);
-            color: var(--text-secondary);
-            border-top: 1px solid #334155;
+        /* --- Scroll Reveal Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
         }
 
-        /* Responsive Design */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            nav {
-                padding: 20px;
-            }
-            .nav-links {
-                display: none; /* In a real app, you'd add a hamburger menu here */
-            }
-            .hero-title {
-                font-size: 3rem;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            section {
-                padding: 80px 20px;
-            }
+            .hero-content h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
+    <canvas id="particle-canvas"></canvas>
+
     <nav>
-        <div class="logo">SANJAY<span>.</span></div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About & Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="logo">SANJAY</div>
     </nav>
 
-    <section id="home">
-        <p class="hero-subtitle">HELLO, WORLD.</p>
-        <h1 class="hero-title">I'm Sanjay Gauswami.</h1>
-        <p class="hero-desc">I am a BCA student and a versatile professional specializing in Web Development, Digital Marketing, and Media Editing. I build clean, responsive, and effective digital experiences.</p>
-        <a href="#contact" class="btn">Get In Touch</a>
+    <section id="hero">
+        <div class="hero-content reveal active">
+            <h1>Sanjay Gauswami</h1>
+            <div class="typing-text">I am a <span id="typed-text"></span><span class="cursor"></span></div>
+        </div>
     </section>
 
     <section id="about">
-        <h2 class="section-title">Professional Profile</h2>
+        <h2 class="section-title">Professional <span>Profile</span></h2>
         
         <div class="about-grid">
-            <div class="info-card">
-                <h3><i class="fa-solid fa-user-tie"></i> Profile Information</h3>
-                <ul class="info-list">
-                    <li><i class="fa-solid fa-id-badge"></i> <strong>Name:</strong> Sanjay Gauswami</li>
-                    <li><i class="fa-solid fa-user"></i> <strong>Username:</strong> SANJAY</li>
-                    <li><i class="fa-solid fa-graduation-cap"></i> <strong>Degree:</strong> Bachelor of Computer Applications (BCA)</li>
-                </ul>
-                
-                <h3 style="margin-top: 30px;"><i class="fa-solid fa-briefcase"></i> Core Competencies</h3>
-                <div class="skills-container">
-                    <span class="skill-tag">Web Developer</span>
-                    <span class="skill-tag">Digital Marketing</span>
-                    <span class="skill-tag">Video/Photo Editor</span>
+            <div class="glass-card reveal">
+                <h3 style="margin-bottom: 25px; color: var(--primary-color);">Identity Matrix</h3>
+                <div class="info-item">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                    <div><strong>Username:</strong> SANJAY</div>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <div><strong>Education:</strong> BCA (Bachelor of Computer Applications)</div>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <div><strong>Focus:</strong> IT & Digital Media</div>
                 </div>
             </div>
 
-            <div class="info-card">
-                <h3><i class="fa-solid fa-code"></i> Technical Languages</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 15px;">Proficient in a variety of programming and markup languages, allowing for versatile development across different platforms.</p>
-                <div class="skills-container">
-                    <span class="skill-tag"><i class="fa-brands fa-python"></i> Python</span>
-                    <span class="skill-tag"><i class="fa-brands fa-java"></i> Java</span>
-                    <span class="skill-tag">C</span>
-                    <span class="skill-tag">C++</span>
-                    <span class="skill-tag"><i class="fa-brands fa-html5"></i> HTML</span>
-                    <span class="skill-tag"><i class="fa-solid fa-database"></i> SQL</span>
+            <div class="glass-card reveal" style="transition-delay: 0.1s;">
+                <h3 style="margin-bottom: 25px; color: var(--primary-color);">Core Roles</h3>
+                <div class="skills-wrapper">
+                    <div class="skill-tag"><i class="fa-solid fa-laptop-code"></i> Web Developer</div>
+                    <div class="skill-tag"><i class="fa-solid fa-bullhorn"></i> Digital Marketing</div>
+                    <div class="skill-tag"><i class="fa-solid fa-film"></i> Editor</div>
+                </div>
+            </div>
+
+            <div class="glass-card reveal" style="transition-delay: 0.2s;">
+                <h3 style="margin-bottom: 25px; color: var(--primary-color);">Technical Stack</h3>
+                <div class="skills-wrapper">
+                    <div class="skill-tag"><i class="fa-brands fa-python"></i> Python</div>
+                    <div class="skill-tag"><i class="fa-brands fa-java"></i> Java</div>
+                    <div class="skill-tag">C / C++</div>
+                    <div class="skill-tag"><i class="fa-brands fa-html5"></i> HTML</div>
+                    <div class="skill-tag"><i class="fa-solid fa-database"></i> SQL</div>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="contact">
-        <h2 class="section-title">Let's Connect</h2>
+        <h2 class="section-title">Establish <span>Connection</span></h2>
         
-        <div class="contact-container">
-            <div class="contact-item">
-                <i class="fa-solid fa-phone contact-icon"></i>
-                <h4>Phone</h4>
+        <div class="contact-grid">
+            <div class="glass-card contact-card reveal">
+                <i class="fa-solid fa-phone-flip"></i>
+                <h3>Direct Line</h3>
                 <a href="tel:8799153676">+91 8799153676</a>
             </div>
 
-            <div class="contact-item">
-                <i class="fa-brands fa-instagram contact-icon"></i>
-                <h4>Instagram</h4>
+            <div class="glass-card contact-card reveal" style="transition-delay: 0.1s;">
+                <i class="fa-brands fa-instagram"></i>
+                <h3>Social Network</h3>
                 <a href="https://instagram.com/sanjayyy.66" target="_blank">@sanjayyy.66</a>
-            </div>
-
-            <div class="contact-item">
-                <i class="fa-solid fa-envelope contact-icon"></i>
-                <h4>Email</h4>
-                <a href="mailto:contact@example.com">Send an Email</a>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 Sanjay Gauswami. Designed for professionalism.</p>
-    </footer>
+    <script>
+        // --- 1. Dynamic Typing Effect ---
+        const textArray = ["BCA Student.", "Web Developer.", "Digital Marketer.", "Media Editor."];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextSpan = document.getElementById("typed-text");
 
+        function type() {
+            const currentText = textArray[textIndex];
+            
+            if (isDeleting) {
+                typedTextSpan.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextSpan.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000; // Pause at end of word
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % textArray.length;
+                typeSpeed = 500; // Pause before next word
+            }
+            setTimeout(type, typeSpeed);
+        }
+        document.addEventListener("DOMContentLoaded", function() { setTimeout(type, 1000); });
+
+        // --- 2. Scroll Reveal Animation ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // --- 3. Live Particle Canvas Background ---
+        const canvas = document.getElementById("particle-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#00f2fe';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
+                if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 1) - 0.5;
+                let directionY = (Math.random() * 1) - 0.5;
+                particlesArray.push(new Particle(x, y, directionX, directionY, size));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+        }
+
+        window.addEventListener('resize', function() {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
 </body>
 </html>
