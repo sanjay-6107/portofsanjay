@@ -1,426 +1,711 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SANJAY | Professional Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Modern Theme Variables */
-        :root {
-            --bg-dark: #0a0a0a;
-            --primary-color: #00f2fe; /* Electric Blue */
-            --secondary-color: #4facfe;
-            --text-main: #ffffff;
-            --text-muted: #a0aab2;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.05);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* --- Live Canvas Background --- */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        /* --- Navigation (Glassmorphism) --- */
-        nav {
-            position: fixed;
-            width: 100%;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: rgba(10, 10, 10, 0.5);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* --- Section Styling --- */
-        section {
-            min-height: 100vh;
-            padding: 120px 5% 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .section-title span {
-            color: var(--primary-color);
-        }
-
-        /* --- Hero Section --- */
-        #hero {
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        /* Dynamic Typing Text */
-        .typing-text {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            min-height: 30px;
-        }
-
-        .typing-text span {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1.2rem;
-            background-color: var(--primary-color);
-            animation: blink 0.8s infinite;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* --- Glassmorphism Cards --- */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 40px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-        }
-
-        /* --- About Grid --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .info-item {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.1rem;
-        }
-
-        .info-item i {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            width: 30px;
-        }
-
-        /* --- Skills Tags --- */
-        .skills-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .skill-tag {
-            padding: 10px 20px;
-            background: rgba(0, 242, 254, 0.05);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            border-radius: 30px;
-            color: var(--text-main);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: var(--primary-color);
-            color: #000;
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        /* --- Contact Section --- */
-        .contact-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .contact-card {
-            text-align: center;
-            min-width: 250px;
-        }
-
-        .contact-card i {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .contact-card a {
-            display: block;
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 1.2rem;
-            margin-top: 10px;
-            transition: color 0.3s;
-        }
-
-        .contact-card a:hover {
-            color: var(--primary-color);
-        }
-
-        /* --- Scroll Reveal Animations --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            .section-title { font-size: 2rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanjay Gauswami — Portfolio 2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Caveat:wght@600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B35;
+    --charcoal: #1a1a1a;
+    --off-white: #f5f3ee;
+    --cream: #faf8f3;
+    --cyan: #00c9c8;
+    --yellow: #FFE156;
+    --white: #ffffff;
+    --gray: #888;
+  }
+ 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+  html { scroll-behavior: smooth; }
+ 
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--charcoal);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+ 
+  /* ====== HERO ====== */
+  .hero {
+    background-color: var(--cream);
+    background-image:
+      linear-gradient(rgba(0,0,0,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.07) 1px, transparent 1px);
+    background-size: 30px 30px;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 120px;
+    overflow: hidden;
+  }
+ 
+  /* Decorative elements */
+  .deco {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+  }
+  .splat1 {
+    top: -30px; left: -30px; width: 140px; height: 140px;
+    background: var(--orange);
+    border-radius: 60% 40% 70% 30% / 50% 60% 40% 70%;
+    opacity: 0.85;
+    animation: wobble 6s ease-in-out infinite;
+  }
+  .splat2 {
+    bottom: 80px; right: -20px; width: 110px; height: 110px;
+    background: var(--orange);
+    border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%;
+    opacity: 0.75;
+    animation: wobble 8s ease-in-out infinite reverse;
+  }
+  .star1 { top: 60px; right: 12%; font-size: 2.2rem; color: var(--charcoal); animation: spin 12s linear infinite; display: inline-block; }
+  .star2 { top: 30%; left: 8%; font-size: 1.4rem; color: var(--charcoal); animation: spin 8s linear infinite reverse; display: inline-block; }
+  .star3 { bottom: 120px; left: 18%; font-size: 1.8rem; color: var(--orange); animation: spin 10s linear infinite; display: inline-block; }
+  .star4 { top: 15%; left: 25%; font-size: 1rem; color: var(--charcoal); animation: twinkle 3s ease-in-out infinite; }
+  .star5 { top: 40%; right: 5%; font-size: 1.2rem; color: var(--orange); animation: twinkle 2.5s ease-in-out infinite 1s; }
+ 
+  @keyframes wobble {
+    0%, 100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 70%; transform: rotate(0deg); }
+    50% { border-radius: 30% 70% 40% 60% / 70% 30% 60% 40%; transform: rotate(8deg); }
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.7); } }
+ 
+  .hero-year {
+    font-family: 'Caveat', cursive;
+    font-size: 2.2rem;
+    color: var(--charcoal);
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    margin-bottom: -10px;
+    animation: fadeDown 0.8s ease both;
+  }
+  .hero-year::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: -8px; right: -8px;
+    height: 2px;
+    background: var(--charcoal);
+    border-radius: 2px;
+  }
+ 
+  .hero-title {
+    font-family: 'Abril Fatface', serif;
+    font-size: clamp(4.5rem, 14vw, 10rem);
+    color: var(--charcoal);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    animation: fadeDown 0.8s ease 0.1s both;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-title .emoji-o {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.85em;
+    height: 0.85em;
+    font-size: 0.8em;
+    vertical-align: middle;
+    position: relative;
+    top: -4px;
+  }
+ 
+  .hero-subtitle {
+    margin-top: 20px;
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    color: var(--charcoal);
+    opacity: 0.7;
+    text-transform: uppercase;
+    font-weight: 500;
+    animation: fadeDown 0.8s ease 0.2s both;
+  }
+ 
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+ 
+  /* Torn paper */
+  .torn {
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 90px;
+    overflow: hidden;
+    line-height: 0;
+  }
+  .torn svg { width: 100%; height: 90px; }
+ 
+  /* ====== DARK SECTIONS ====== */
+  .dark-body {
+    background: var(--charcoal);
+    padding: 80px 5% 60px;
+  }
+ 
+  /* ====== ABOUT ====== */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto 80px;
+    animation: fadeUp 0.9s ease 0.3s both;
+  }
+ 
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+ 
+  .polaroid {
+    position: relative;
+    display: inline-block;
+    max-width: 260px;
+    width: 100%;
+  }
+  .polaroid-inner {
+    background: var(--white);
+    padding: 12px 12px 44px;
+    box-shadow: 6px 8px 30px rgba(0,0,0,0.5);
+    transform: rotate(-3deg);
+    position: relative;
+  }
+  .polaroid-photo {
+    width: 100%;
+    padding-top: 100%;
+    background: linear-gradient(135deg, var(--cyan) 0%, #0099a8 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .polaroid-photo-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatar-placeholder {
+    font-size: 6rem;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+  .polaroid-sticker {
+    position: absolute;
+    font-size: 2rem;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+  }
+  .sticker-alien { top: -16px; left: -16px; transform: rotate(-10deg); }
+  .sticker-bolt { bottom: 30px; right: -14px; transform: rotate(15deg); font-size: 2.4rem; }
+  .sticker-star { bottom: -10px; left: 10px; transform: rotate(-5deg); }
+  .polaroid-name {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--charcoal);
+    text-align: center;
+    margin-top: 8px;
+    font-weight: 700;
+  }
+  .polaroid-tape {
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 60px; height: 22px;
+    background: rgba(255,225,86,0.7);
+    border-radius: 2px;
+  }
+ 
+  .about-text {}
+  .hello-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 3.5rem;
+    color: var(--white);
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .about-bio {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 28px;
+  }
+ 
+  .contact-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: var(--white);
+    margin-bottom: 14px;
+    position: relative;
+    display: inline-block;
+  }
+  .contact-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 0; right: 0;
+    height: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+ 
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 9px 14px;
+    border-radius: 10px;
+    transition: all 0.25s;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .contact-item:hover {
+    background: rgba(255,107,53,0.15);
+    border-color: var(--orange);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+  .contact-icon { font-size: 1.2rem; flex-shrink: 0; }
+ 
+  /* ====== DIVIDER ====== */
+  .section-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 0 auto 60px;
+    max-width: 960px;
+  }
+ 
+  /* ====== SECTION HEADINGS ====== */
+  .section-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 28px;
+    display: inline-block;
+    position: relative;
+  }
+  .section-heading .accent { color: var(--orange); }
+  .section-heading::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -14px; left: -6px;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+  }
+ 
+  /* ====== EDU + EXP GRID ====== */
+  .edu-exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 60px;
+    max-width: 960px;
+    margin: 0 auto 70px;
+  }
+ 
+  .edu-entry { margin-bottom: 24px; }
+  .edu-year {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .edu-school {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+  .edu-degree {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+  }
+ 
+  .exp-entry {
+    margin-bottom: 28px;
+    padding-left: 18px;
+    border-left: 2px solid rgba(255,107,53,0.3);
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .exp-entry:hover { border-color: var(--orange); }
+  .exp-entry::before {
+    content: '';
+    position: absolute;
+    left: -6px; top: 6px;
+    width: 10px; height: 10px;
+    background: var(--orange);
+    border-radius: 50%;
+  }
+  .exp-year {
+    font-size: 0.75rem;
+    color: var(--orange);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .exp-company {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+  .exp-role {
+    font-size: 0.82rem;
+    color: var(--cyan);
+    font-style: italic;
+    margin-bottom: 5px;
+  }
+  .exp-desc {
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+ 
+  /* ====== SOFTWARE ====== */
+  .software-skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 960px;
+    margin: 0 auto 40px;
+  }
+ 
+  .sw-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .sw-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .sw-badge {
+    width: 54px; height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .sw-badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  }
+  .sw-badge:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 10px 24px rgba(0,0,0,0.5); }
+  .sw-label { font-size: 0.68rem; color: rgba(255,255,255,0.55); text-align: center; }
+ 
+  .ps  { background: linear-gradient(135deg, #001e36, #31a8ff); }
+  .ai  { background: linear-gradient(135deg, #2d1a00, #ff9a00); }
+  .pr  { background: linear-gradient(135deg, #14002c, #9999ff); }
+  .ae  { background: linear-gradient(135deg, #060042, #9999ff); }
+  .cv  { background: linear-gradient(135deg, #7c2ff8, #00c4cc); }
+  .fig { background: linear-gradient(135deg, #1e1e1e, #f24e1e); }
+  .vs  { background: linear-gradient(135deg, #1a1a2e, #007acc); }
+ 
+  /* Language pills */
+  .lang-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .lang-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1.5px solid;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .lang-pill:hover { transform: scale(1.05); }
+  .lp-orange { border-color: var(--orange); color: var(--orange); }
+  .lp-cyan   { border-color: var(--cyan); color: var(--cyan); }
+  .lp-yellow { border-color: var(--yellow); color: var(--yellow); }
+  .lp-white  { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); }
+ 
+  /* Skill pills */
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .skill-pill {
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.78);
+    transition: all 0.25s;
+    cursor: default;
+    font-style: italic;
+  }
+  .skill-pill:hover {
+    background: rgba(255,107,53,0.14);
+    border-color: var(--orange);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+ 
+  /* ====== FOOTER ====== */
+  footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .footer-name {
+    font-family: 'Abril Fatface', serif;
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+  .footer-name span { color: var(--orange); }
+  .footer-sub {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+ 
+  /* Responsive */
+  @media (max-width: 680px) {
+    .about-grid, .edu-exp-grid, .software-skills-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .polaroid { max-width: 200px; margin: 0 auto; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: clamp(3.5rem, 18vw, 7rem); }
+  }
+</style>
 </head>
 <body>
-
-    <canvas id="particle-canvas"></canvas>
-
-    <nav>
-        <div class="logo">SANJAY</div>
-    </nav>
-
-    <section id="hero">
-        <div class="hero-content reveal active">
-            <h1>Sanjay Gauswami</h1>
-            <div class="typing-text">I am a <span id="typed-text"></span><span class="cursor"></span></div>
+ 
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <div class="deco splat1"></div>
+  <div class="deco splat2"></div>
+  <div class="deco star1">✦</div>
+  <div class="deco star2">✶</div>
+  <div class="deco star3">★</div>
+  <div class="deco star4">✦</div>
+  <div class="deco star5">✦</div>
+ 
+  <div class="hero-year">2024</div>
+  <h1 class="hero-title">
+    P<span class="emoji-o">😊</span>rtf<span class="emoji-o">🅾</span>li<span class="emoji-o">⭕</span>
+  </h1>
+  <p class="hero-subtitle">Graphic Design ✦ Digital Art ✦ Print Media</p>
+ 
+  <div class="torn">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L0,55 C40,70 70,30 120,50 C160,65 200,80 250,60 C300,40 330,75 380,55 C420,38 460,72 510,60 C560,48 590,78 640,62 C690,46 720,80 770,58 C815,38 850,68 900,50 C945,33 980,70 1030,52 C1075,35 1110,66 1160,50 C1205,35 1245,72 1290,55 C1340,36 1390,70 1440,52 L1440,0 Z" fill="#faf8f3"/>
+    </svg>
+  </div>
+</section>
+ 
+<!-- ======= DARK BODY ======= -->
+<div class="dark-body">
+ 
+  <!-- ABOUT -->
+  <div class="about-grid">
+    <div>
+      <div class="polaroid">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-inner">
+          <div class="polaroid-photo">
+            <div class="polaroid-photo-inner">
+              <div class="avatar-placeholder">🧑‍💻</div>
+            </div>
+          </div>
+          <div class="polaroid-name">Sanjay Gauswami</div>
+          <div class="polaroid-sticker sticker-alien">👽</div>
+          <div class="polaroid-sticker sticker-bolt">⚡</div>
+          <div class="polaroid-sticker sticker-star">✨</div>
         </div>
-    </section>
-
-    <section id="about">
-        <h2 class="section-title">Professional <span>Profile</span></h2>
-        
-        <div class="about-grid">
-            <div class="glass-card reveal">
-                <h3 style="margin-bottom: 25px; color: var(--primary-color);">Identity Matrix</h3>
-                <div class="info-item">
-                    <i class="fa-solid fa-user-astronaut"></i>
-                    <div><strong>Username:</strong> SANJAY</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                    <div><strong>Education:</strong> BCA (Bachelor of Computer Applications)</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa-solid fa-briefcase"></i>
-                    <div><strong>Focus:</strong> IT & Digital Media</div>
-                </div>
-            </div>
-
-            <div class="glass-card reveal" style="transition-delay: 0.1s;">
-                <h3 style="margin-bottom: 25px; color: var(--primary-color);">Core Roles</h3>
-                <div class="skills-wrapper">
-                    <div class="skill-tag"><i class="fa-solid fa-laptop-code"></i> Web Developer</div>
-                    <div class="skill-tag"><i class="fa-solid fa-bullhorn"></i> Digital Marketing</div>
-                    <div class="skill-tag"><i class="fa-solid fa-film"></i> Editor</div>
-                </div>
-            </div>
-
-            <div class="glass-card reveal" style="transition-delay: 0.2s;">
-                <h3 style="margin-bottom: 25px; color: var(--primary-color);">Technical Stack</h3>
-                <div class="skills-wrapper">
-                    <div class="skill-tag"><i class="fa-brands fa-python"></i> Python</div>
-                    <div class="skill-tag"><i class="fa-brands fa-java"></i> Java</div>
-                    <div class="skill-tag">C / C++</div>
-                    <div class="skill-tag"><i class="fa-brands fa-html5"></i> HTML</div>
-                    <div class="skill-tag"><i class="fa-solid fa-database"></i> SQL</div>
-                </div>
-            </div>
+      </div>
+    </div>
+ 
+    <div class="about-text">
+      <div class="hello-heading">Hello! 👋</div>
+      <p class="about-bio">
+        Hi, my name is <strong style="color:var(--white)">Sanjay Gauswami</strong> — a multi-skilled designer & developer based in India. I blend creative design thinking with technical coding expertise, crafting digital experiences that are both visually stunning and functionally powerful.
+      </p>
+ 
+      <div class="contact-heading">Contact</div>
+      <div class="contact-grid">
+        <a class="contact-item" href="tel:8799153676">
+          <span class="contact-icon">📞</span> 8799153676
+        </a>
+        <a class="contact-item" href="mailto:gauswami916@gmail.com">
+          <span class="contact-icon">✉️</span> gauswami916@gmail.com
+        </a>
+        <a class="contact-item" href="https://instagram.com/sanjayyy.66" target="_blank">
+          <span class="contact-icon">📸</span> @sanjayyy.66
+        </a>
+        <a class="contact-item" href="#">
+          <span class="contact-icon">💼</span> @sanjay
+        </a>
+      </div>
+    </div>
+  </div>
+ 
+  <hr class="section-divider">
+ 
+  <!-- EDU + EXPERIENCE -->
+  <div class="edu-exp-grid">
+    <div>
+      <div class="section-heading" data-num="01">Edu<span class="accent">c</span>ation</div>
+      <div class="edu-entry">
+        <div class="edu-year">2020 – 2024</div>
+        <div class="edu-school">Computer Science & Engineering</div>
+        <div class="edu-degree">Bachelor of Technology</div>
+      </div>
+      <div class="edu-entry">
+        <div class="edu-year">Ongoing</div>
+        <div class="edu-school">Self-taught Developer</div>
+        <div class="edu-degree">Design · Web Dev · Digital Marketing</div>
+      </div>
+ 
+      <div style="margin-top:36px">
+        <div class="section-heading" data-num="03">S<span class="accent">k</span>ills</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Adaptable</span>
+          <span class="skill-pill">Communication</span>
+          <span class="skill-pill">Desire to Learn</span>
+          <span class="skill-pill">Positive Attitude</span>
+          <span class="skill-pill">Teamwork</span>
+          <span class="skill-pill">Problem Solving</span>
         </div>
-    </section>
-
-    <section id="contact">
-        <h2 class="section-title">Establish <span>Connection</span></h2>
-        
-        <div class="contact-grid">
-            <div class="glass-card contact-card reveal">
-                <i class="fa-solid fa-phone-flip"></i>
-                <h3>Direct Line</h3>
-                <a href="tel:8799153676">+91 8799153676</a>
-            </div>
-
-            <div class="glass-card contact-card reveal" style="transition-delay: 0.1s;">
-                <i class="fa-brands fa-instagram"></i>
-                <h3>Social Network</h3>
-                <a href="https://instagram.com/sanjayyy.66" target="_blank">@sanjayyy.66</a>
-            </div>
+      </div>
+    </div>
+ 
+    <div>
+      <div class="section-heading" data-num="02">Ex<span class="accent">p</span>erience</div>
+ 
+      <div class="exp-entry">
+        <div class="exp-year">2022 – 2023</div>
+        <div class="exp-company">Digital Marketing Internship</div>
+        <div class="exp-role">Creative Designer & Strategist</div>
+        <div class="exp-desc">Designed digital marketing artworks for social media — posts, reels covers, branding campaigns across multiple client niches.</div>
+      </div>
+ 
+      <div class="exp-entry">
+        <div class="exp-year">2023 – 2024</div>
+        <div class="exp-company">Freelance Web Designer</div>
+        <div class="exp-role">UI/UX & Front-End Developer</div>
+        <div class="exp-desc">Built responsive websites and landing pages for local businesses, implementing clean UI with HTML, CSS, JavaScript, and modern frameworks.</div>
+      </div>
+ 
+      <div class="exp-entry">
+        <div class="exp-year">2024 – Present</div>
+        <div class="exp-company">Independent Creative Studio</div>
+        <div class="exp-role">Full-Stack Creative Developer</div>
+        <div class="exp-desc">Strategizing, branding, and developing digital products — combining code + design for end-to-end creative solutions.</div>
+      </div>
+    </div>
+  </div>
+ 
+  <hr class="section-divider">
+ 
+  <!-- SOFTWARE + LANGUAGES -->
+  <div class="software-skills-grid">
+    <div>
+      <div class="section-heading" data-num="04">S<span class="accent">o</span>ftware</div>
+      <div class="sw-icons">
+        <div class="sw-icon"><div class="sw-badge ps" title="Photoshop">Ps</div><div class="sw-label">Photoshop</div></div>
+        <div class="sw-icon"><div class="sw-badge ai" title="Illustrator">Ai</div><div class="sw-label">Illustrator</div></div>
+        <div class="sw-icon"><div class="sw-badge pr" title="Premiere Pro">Pr</div><div class="sw-label">Premiere</div></div>
+        <div class="sw-icon"><div class="sw-badge ae" title="After Effects">Ae</div><div class="sw-label">After Effects</div></div>
+        <div class="sw-icon"><div class="sw-badge cv" title="Canva">Cv</div><div class="sw-label">Canva</div></div>
+        <div class="sw-icon"><div class="sw-badge fig" title="Figma">Fg</div><div class="sw-label">Figma</div></div>
+        <div class="sw-icon"><div class="sw-badge vs" title="VS Code">VS</div><div class="sw-label">VS Code</div></div>
+      </div>
+    </div>
+ 
+    <div>
+      <div class="section-heading" data-num="05">Lan<span class="accent">g</span>uages</div>
+      <div class="lang-pills">
+        <span class="lang-pill lp-orange">C</span>
+        <span class="lang-pill lp-orange">C++</span>
+        <span class="lang-pill lp-cyan">Python</span>
+        <span class="lang-pill lp-yellow">Java</span>
+        <span class="lang-pill lp-yellow">JavaScript</span>
+        <span class="lang-pill lp-cyan">SQL</span>
+        <span class="lang-pill lp-white">HTML/CSS</span>
+      </div>
+ 
+      <div style="margin-top:32px">
+        <div class="section-heading" data-num="06">Do<span class="accent">m</span>ains</div>
+        <div class="lang-pills">
+          <span class="lang-pill lp-orange">Graphic Design</span>
+          <span class="lang-pill lp-cyan">Digital Marketing</span>
+          <span class="lang-pill lp-yellow">Web Design</span>
+          <span class="lang-pill lp-white">Web Development</span>
+          <span class="lang-pill lp-orange">Coding</span>
         </div>
-    </section>
-
-    <script>
-        // --- 1. Dynamic Typing Effect ---
-        const textArray = ["BCA Student.", "Web Developer.", "Digital Marketer.", "Media Editor."];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typedTextSpan = document.getElementById("typed-text");
-
-        function type() {
-            const currentText = textArray[textIndex];
-            
-            if (isDeleting) {
-                typedTextSpan.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedTextSpan.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let typeSpeed = isDeleting ? 50 : 100;
-
-            if (!isDeleting && charIndex === currentText.length) {
-                typeSpeed = 2000; // Pause at end of word
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % textArray.length;
-                typeSpeed = 500; // Pause before next word
-            }
-            setTimeout(type, typeSpeed);
-        }
-        document.addEventListener("DOMContentLoaded", function() { setTimeout(type, 1000); });
-
-        // --- 2. Scroll Reveal Animation ---
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-
-        // --- 3. Live Particle Canvas Background ---
-        const canvas = document.getElementById("particle-canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray;
-
-        class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = '#00f2fe';
-                ctx.fill();
-            }
-            update() {
-                if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
-                if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
-            }
-        }
-
-        function init() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 1) - 0.5;
-                let directionY = (Math.random() * 1) - 0.5;
-                particlesArray.push(new Particle(x, y, directionX, directionY, size));
-            }
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
-        }
-
-        window.addEventListener('resize', function() {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-            init();
-        });
-
-        init();
-        animate();
-    </script>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Sanjay <span>G</span>auswami</div>
+    <div class="footer-sub">Designer · Developer · Creator &nbsp;·&nbsp; © 2024</div>
+  </footer>
+</div>
+ 
 </body>
 </html>
